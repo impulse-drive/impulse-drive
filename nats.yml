@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+    annotations:
+        service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    name: nats
+    labels:
+       app: nats
+spec:
+    ports:
+        - port: 4222
+          name: nats-client
+          targetPort: 4222
+    selector:
+        app: nats
+---
+apiVersion: v1
+kind: Pod
+metadata:
+    name: nats
+    labels:
+        app: nats
+spec:
+    containers:
+        - name: nats
+          image: bitnami/nats:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4222
+            - containerPort: 6222
+            - containerPort: 8222

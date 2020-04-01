@@ -4,26 +4,26 @@ kind: Service
 metadata:
     annotations:
         service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
-    name: ci-storage
+    name: storage
     labels:
        app: ci-storage
 spec:
     ports:
         - port: 80
-          name: ci-storage
+          name: storage
           targetPort: 30000
     selector:
-        app: ci-storage
+        app: storage
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-    name: ci-storage
+    name: storage
     labels:
-        app: ci-storage
+        app: storage
 spec:
     containers:
-        - name: ci-storage
+        - name: storage
           image: aerkenemesis/storage:latest
           imagePullPolicy: Always
           env:
