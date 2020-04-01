@@ -4,7 +4,7 @@ kind: Service
 metadata:
     annotations:
         service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
-    name: nats
+    name: nats-client
     labels:
        app: nats
 spec:
