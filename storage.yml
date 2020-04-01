@@ -6,7 +6,7 @@ metadata:
         service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
     name: storage
     labels:
-       app: ci-storage
+       app: storage
 spec:
     ports:
         - port: 80
