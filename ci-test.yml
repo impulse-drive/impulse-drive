@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+    name: ci-test
+spec:
+    containers:
+        - name: git-home-manager
+          image: aerkenemesis/git:latest
+          imagePullPolicy: Always
+          env:
+            - name: POLL_TIMEOUT
+              value: "3000"
+            - name: URL
+              value: "https://github.com/simonvpe/home-manager.git"
+            - name: REF
+              value: "master"
+            - name: PIPELINE
+              value: "pipeline1"
+            - name: NAME
+              value: "home-manager"
+            - name: STORAGE_URL
+              value: "http://ci-storage.default.svc.cluster.local"
+            - name: QUEUE_URL
+              value: "nats-client.default.svc.cluster.local:4222"
+        - name: job1-scheduler
+          image: aerkenemesis/job:latest
+          imagePullPolicy: Always
+          env:
+            - name: NAME
+              value: "job1"
+            - name: QUEUE_URL
+              value: "nats-client.default.svc.cluster.local:4222"
+            - name: STORAGE_URL
+              value: "http://ci-storage.default.svc.cluster.local"
+            - name: RESOURCES
+              value: "home-manager"
+            - name: PIPELINE
+              value: "pipeline1"
+            - name: JOB
+              value: |
+                  {
+                      "name": "job1"
+                  }

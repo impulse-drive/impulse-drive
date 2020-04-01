@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+    annotations:
+        service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    name: ci-storage
+    labels:
+       app: ci-storage
+spec:
+    ports:
+        - port: 80
+          name: ci-storage
+          targetPort: 30000
+    selector:
+        app: ci-storage
+---
+apiVersion: v1
+kind: Pod
+metadata:
+    name: ci-storage
+    labels:
+        app: ci-storage
+spec:
+    containers:
+        - name: ci-storage
+          image: aerkenemesis/storage:latest
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: "30000"
+            - name: STORAGE_DIR
+              value: "/tmp"
+          ports:
+            - containerPort: 30000
