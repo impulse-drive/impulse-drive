@@ -9,7 +9,8 @@ kind: Role
 metadata:
   name: modify-jobs
 rules:
-  - apiGroups: [""]
+  - apiGroups:
+      - batch
     resources:
       - jobs
     verbs:
